@@ -136,7 +136,7 @@ class TerminalWidget(QWidget):
         """
         Send a command from the "command_txt" line edit widget.
         """
-        
+
         # Get the command text (cast to string and strip whitespace)
         command = str(self.command_txt.text()).strip()
 
