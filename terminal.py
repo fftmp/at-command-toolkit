@@ -115,7 +115,7 @@ class TerminalWidget(QWidget):
 
             # Add a command marker in the terminal & send the command
             self.log.append('> ')
-            self.serial_conn.write(command + '\r\n')
+            self.serial_conn.write((command + '\r\n').encode('utf-8'))
 
         except serial.SerialException:
             QMessageBox.critical(self,
