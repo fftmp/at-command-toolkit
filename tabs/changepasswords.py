@@ -100,7 +100,7 @@ class ChangePasswordsWidget(QWidget):
         network_pw = str(network_pw)
 
         # Check that the network password is not empty
-        if len(network_pw) == 0:
+        if network_pw:
             raise ValueError('Please enter a network password.')
 
         # Check that the network password is only digits
@@ -138,7 +138,7 @@ class ChangePasswordsWidget(QWidget):
         try:
             self.validate_network_pw(old_network_pw)
         except ValueError as e:
-            QMessageBox.critical(self, self.tr('Error'), self.tr(e.message), QMessageBox.Ok)
+            QMessageBox.critical(self, self.tr('Error'), self.tr(str(e)), QMessageBox.Ok)
             self.old_pw_txt.setFocus()
             self.old_pw_txt.selectAll()
             return
@@ -147,7 +147,7 @@ class ChangePasswordsWidget(QWidget):
         try:
             self.validate_network_pw(new_network_pw)
         except ValueError as e:
-            QMessageBox.critical(self, self.tr('Error'), self.tr(e.message), QMessageBox.Ok)
+            QMessageBox.critical(self, self.tr('Error'), self.tr(str(e)), QMessageBox.Ok)
             self.new_pw_txt.setFocus()
             self.new_pw_txt.selectAll()
             return

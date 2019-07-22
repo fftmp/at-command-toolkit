@@ -85,7 +85,7 @@ class CallControlWidget(QWidget):
         Sends the AT command to initiate a voice or data call.
         """
         dial_string = str(self.call_string_txt.text()).strip()
-        if len(dial_string) == 0:
+        if dial_string:
             QMessageBox.critical(self, self.tr('Error'), self.tr('Please enter a string to dial'), QMessageBox.Ok)
             return
 
