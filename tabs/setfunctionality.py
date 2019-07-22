@@ -19,10 +19,7 @@
 Module containing the "Set Functionality" commands class/widget.
 """
 
-# 3rd party modules
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QPushButton, QRadioButton, QVBoxLayout, QWidget
 
 class SetFunctionalityWidget(QWidget):
     """

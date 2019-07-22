@@ -30,8 +30,7 @@ commands to stdout so that the AT commands can be inspected.
 import sys
 
 # 3rd party modules
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
+from PyQt5.QtWidgets import QApplication, QMainWindow
 
 class DummyTerminal():
     def send_command(self, command):

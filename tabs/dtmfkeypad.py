@@ -20,9 +20,9 @@ Module containing the "DTMF Keypad" commands class/widget.
 """
 
 # 3rd party modules
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QFont, QIcon
+from PyQt5.QtWidgets import (QGridLayout, QGroupBox, QHBoxLayout, QLabel, QLineEdit, QMessageBox,
+                             QPushButton, QVBoxLayout, QWidget)
 
 class DtmfKeypadWidget(QWidget):
     """

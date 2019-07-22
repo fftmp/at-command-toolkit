@@ -19,10 +19,10 @@
 Module containing the serial port connection dialog.
 """
 
-# 3rd party modules
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog, QGridLayout, QGroupBox,
+                             QHBoxLayout, QLabel, QMainWindow, QMessageBox, QPushButton,
+                             QVBoxLayout)
 import serial
 import serial.tools.list_ports
 

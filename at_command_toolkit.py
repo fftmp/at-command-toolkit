@@ -17,25 +17,15 @@
 # You should have received a copy of the GNU General Public License along with
 # this program. If not, see <http://www.gnu.org/licenses/>.
 
-
 """
 Top level application file for the AT Command Toolkit application.
 """
-__version__ = 'x.x'
-APP_NAME = 'AT Command Toolkit'
-AUTHOR = 'Craig Dodd'
-ORGANIZATION = 'Shelltoad Computing'
-COPYRIGHT = 'GNU General Public License v3'
 
-# import required modules
-
-# Standard library modules
 import sys
-
-# 3rd party modules
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import QSettings, Qt, QVariant
+from PyQt5.QtGui import QFont, QIcon
+from PyQt5.QtWidgets import (QAction, qApp, QApplication, QDockWidget, QFontDialog, QMainWindow,
+                             QMessageBox, QTabWidget)
 
 # Local application modules
 from connectdlg import ConnectDlg
@@ -48,6 +38,11 @@ from tabs.dtmfkeypad import DtmfKeypadWidget
 from tabs.setfunctionality import SetFunctionalityWidget
 from terminal import TerminalWidget
 
+__version__ = 'x.x'
+APP_NAME = 'AT Command Toolkit'
+AUTHOR = 'Craig Dodd'
+ORGANIZATION = 'Shelltoad Computing'
+COPYRIGHT = 'GNU General Public License v3'
 
 class MainWindow(QMainWindow):
     """

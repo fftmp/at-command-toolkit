@@ -19,10 +19,10 @@
 Module containing the Terminal class/widget for serial port communication.
 """
 
-# 3rd party modules
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import pyqtSignal, QTimer
+from PyQt5.QtGui import QIcon, QTextCursor
+from PyQt5.QtWidgets import (QHBoxLayout, QLineEdit, QMessageBox, QPushButton, QTextEdit,
+                             QVBoxLayout, QWidget)
 import serial
 
 class TerminalWidget(QWidget):

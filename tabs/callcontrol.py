@@ -19,10 +19,8 @@
 Module containing the "Call Control" commands class/widget.
 """
 
-# 3rd party modules
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import (QGridLayout, QGroupBox, QHBoxLayout, QLineEdit, QMessageBox,
+                             QPushButton, QRadioButton, QVBoxLayout, QWidget)
 
 class CallControlWidget(QWidget):
     """

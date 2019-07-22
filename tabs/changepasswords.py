@@ -19,10 +19,8 @@
 Module containing the "Change Passwords" commands class/widget.
 """
 
-# 3rd party modules
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import (QGroupBox, QHBoxLayout, QLabel, QLineEdit, QMessageBox, QPushButton,
+                             QRadioButton, QVBoxLayout, QWidget)
 
 class ChangePasswordsWidget(QWidget):
     """
