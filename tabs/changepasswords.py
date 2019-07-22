@@ -20,8 +20,9 @@ Module containing the "Change Passwords" commands class/widget.
 """
 
 # 3rd party modules
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 class ChangePasswordsWidget(QWidget):
     """
@@ -90,8 +91,8 @@ class ChangePasswordsWidget(QWidget):
         self.setLayout(container)
 
         # Connect widgets
-        self.connect(change_pw_btn, SIGNAL('clicked()'), self.change_pw)
-        self.connect(test_cmd_btn, SIGNAL('clicked()'), lambda: terminal.send_command('AT+CPWD=?'))
+        change_pw_btn.clicked.connect(self.change_pw)
+        test_cmd_btn.clicked.connect(lambda: terminal.send_command('AT+CPWD=?'))
 
     def validate_network_pw(self, network_pw):
         """
@@ -138,7 +139,7 @@ class ChangePasswordsWidget(QWidget):
         # Validate the old network password
         try:
             self.validate_network_pw(old_network_pw)
-        except ValueError, e:
+        except ValueError as e:
             QMessageBox.critical(self, self.tr('Error'), self.tr(e.message), QMessageBox.Ok)
             self.old_pw_txt.setFocus()
             self.old_pw_txt.selectAll()
@@ -147,7 +148,7 @@ class ChangePasswordsWidget(QWidget):
         # Validate the new network password
         try:
             self.validate_network_pw(new_network_pw)
-        except ValueError, e:
+        except ValueError as e:
             QMessageBox.critical(self, self.tr('Error'), self.tr(e.message), QMessageBox.Ok)
             self.new_pw_txt.setFocus()
             self.new_pw_txt.selectAll()

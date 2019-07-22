@@ -20,8 +20,9 @@ Module containing the "DTMF Keypad" commands class/widget.
 """
 
 # 3rd party modules
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 class DtmfKeypadWidget(QWidget):
     """
@@ -111,23 +112,23 @@ class DtmfKeypadWidget(QWidget):
         self.setLayout(container)
 
         # Connect widgets
-        self.connect(btn_0, SIGNAL('clicked()'), lambda: terminal.send_command('AT+VTS="0"'))
-        self.connect(btn_1, SIGNAL('clicked()'), lambda: terminal.send_command('AT+VTS="1"'))
-        self.connect(btn_2, SIGNAL('clicked()'), lambda: terminal.send_command('AT+VTS="2"'))
-        self.connect(btn_3, SIGNAL('clicked()'), lambda: terminal.send_command('AT+VTS="3"'))
-        self.connect(btn_4, SIGNAL('clicked()'), lambda: terminal.send_command('AT+VTS="4"'))
-        self.connect(btn_5, SIGNAL('clicked()'), lambda: terminal.send_command('AT+VTS="5"'))
-        self.connect(btn_6, SIGNAL('clicked()'), lambda: terminal.send_command('AT+VTS="6"'))
-        self.connect(btn_7, SIGNAL('clicked()'), lambda: terminal.send_command('AT+VTS="7"'))
-        self.connect(btn_8, SIGNAL('clicked()'), lambda: terminal.send_command('AT+VTS="8"'))
-        self.connect(btn_9, SIGNAL('clicked()'), lambda: terminal.send_command('AT+VTS="9"'))
-        self.connect(btn_a, SIGNAL('clicked()'), lambda: terminal.send_command('AT+VTS="A"'))
-        self.connect(btn_b, SIGNAL('clicked()'), lambda: terminal.send_command('AT+VTS="B"'))
-        self.connect(btn_c, SIGNAL('clicked()'), lambda: terminal.send_command('AT+VTS="C"'))
-        self.connect(btn_d, SIGNAL('clicked()'), lambda: terminal.send_command('AT+VTS="D"'))
-        self.connect(btn_str, SIGNAL('clicked()'), lambda: terminal.send_command('AT+VTS="*"'))
-        self.connect(btn_hsh, SIGNAL('clicked()'), lambda: terminal.send_command('AT+VTS="#"'))
-        self.connect(send_string_btn, SIGNAL('clicked()'), self.send_string)
+        btn_0.clicked.connect(lambda: terminal.send_command('AT+VTS="0"'))
+        btn_1.clicked.connect(lambda: terminal.send_command('AT+VTS="1"'))
+        btn_2.clicked.connect(lambda: terminal.send_command('AT+VTS="2"'))
+        btn_3.clicked.connect(lambda: terminal.send_command('AT+VTS="3"'))
+        btn_4.clicked.connect(lambda: terminal.send_command('AT+VTS="4"'))
+        btn_5.clicked.connect(lambda: terminal.send_command('AT+VTS="5"'))
+        btn_6.clicked.connect(lambda: terminal.send_command('AT+VTS="6"'))
+        btn_7.clicked.connect(lambda: terminal.send_command('AT+VTS="7"'))
+        btn_8.clicked.connect(lambda: terminal.send_command('AT+VTS="8"'))
+        btn_9.clicked.connect(lambda: terminal.send_command('AT+VTS="9"'))
+        btn_a.clicked.connect(lambda: terminal.send_command('AT+VTS="A"'))
+        btn_b.clicked.connect(lambda: terminal.send_command('AT+VTS="B"'))
+        btn_c.clicked.connect(lambda: terminal.send_command('AT+VTS="C"'))
+        btn_d.clicked.connect(lambda: terminal.send_command('AT+VTS="D"'))
+        btn_str.clicked.connect(lambda: terminal.send_command('AT+VTS="*"'))
+        btn_hsh.clicked.connect(lambda: terminal.send_command('AT+VTS="#"'))
+        send_string_btn.clicked.connect(self.send_string)
 
     def validate_dtmf_string(self, dtmf_string):
         """

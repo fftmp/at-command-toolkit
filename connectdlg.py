@@ -20,9 +20,11 @@ Module containing the serial port connection dialog.
 """
 
 # 3rd party modules
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 import serial
+import serial.tools.list_ports
 
 SERIAL_PORT_TIMEOUT = 0.5
 
@@ -60,7 +62,7 @@ class ConnectDlg(QDialog):
 
         # Create "basics" group layout
         refresh_btn = QPushButton(QIcon(':/images/action_refresh.gif'), '')
-        self.connect(refresh_btn, SIGNAL('clicked()'), self.populate_port)
+        refresh_btn.clicked.connect(self.populate_port)
 
         basics_box = QGroupBox(self.tr('Basics:'))
         basics_box_layout = QGridLayout()
@@ -103,8 +105,8 @@ class ConnectDlg(QDialog):
         self.setLayout(container)
 
         # Connect widgets
-        self.connect(connect_btn, SIGNAL('clicked()'), self.try_connect)
-        self.connect(exit_btn, SIGNAL('clicked()'), self.reject)
+        connect_btn.clicked.connect(self.try_connect)
+        exit_btn.clicked.connect(self.reject)
 
         # Populate the serial options
         self.populate_options()
@@ -113,9 +115,9 @@ class ConnectDlg(QDialog):
         self.port_box.clear()
 
         # Populate the port number combo box (attempt to connect to all possible ports)
-        for i in range(256):
+        for i in serial.tools.list_ports.comports():
             try:
-                s = serial.Serial(i)
+                s = serial.Serial(i.device)
             except serial.SerialException:
                 pass
             else:
@@ -182,7 +184,7 @@ class ConnectDlg(QDialog):
         # Try to open the serial connection
         try:
             self.serial_conn.open()
-        except serial.SerialException, e:
+        except serial.SerialException as e:
             QMessageBox.critical(self, self.tr('Serial Port Error'), self.tr(str(e).capitalize()), QMessageBox.Ok)
         else:
             self.accept()
@@ -194,5 +196,4 @@ if __name__ == '__main__':
     form = ConnectDlg()
     if form.exec_():
         serial_conn = form.serial_conn
-        print serial_conn
-    sys.exit(0)
+        print(serial_conn)

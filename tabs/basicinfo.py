@@ -20,8 +20,9 @@ Module containing the "Basic Info" commands class/widget.
 """
 
 # 3rd party modules
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 class BasicInfoWidget(QWidget):
     """
@@ -64,13 +65,13 @@ class BasicInfoWidget(QWidget):
         self.setLayout(container)
 
         # Connect widgets
-        self.connect(imei_btn, SIGNAL('clicked()'), lambda: terminal.send_command('AT+CGSN'))
-        self.connect(imsi_btn, SIGNAL('clicked()'), lambda: terminal.send_command('AT+CIMI'))
-        self.connect(manufacturer_btn, SIGNAL('clicked()'), lambda: terminal.send_command('AT+GMI'))
-        self.connect(model_btn, SIGNAL('clicked()'), lambda: terminal.send_command('AT+GMM'))
-        self.connect(software_btn, SIGNAL('clicked()'), lambda: terminal.send_command('AT+GMR'))
-        self.connect(modem_btn, SIGNAL('clicked()'), lambda: terminal.send_command('AT+GCAP'))
-        self.connect(commands_btn, SIGNAL('clicked()'), lambda: terminal.send_command('AT+CLAC'))
+        imei_btn.clicked.connect(lambda: terminal.send_command('AT+CGSN'))
+        imsi_btn.clicked.connect(lambda: terminal.send_command('AT+CIMI'))
+        manufacturer_btn.clicked.connect(lambda: terminal.send_command('AT+GMI'))
+        model_btn.clicked.connect(lambda: terminal.send_command('AT+GMM'))
+        software_btn.clicked.connect(lambda: terminal.send_command('AT+GMR'))
+        modem_btn.clicked.connect(lambda: terminal.send_command('AT+GCAP'))
+        commands_btn.clicked.connect(lambda: terminal.send_command('AT+CLAC'))
 
 if __name__ == '__main__':
     from standalone import run_standalone

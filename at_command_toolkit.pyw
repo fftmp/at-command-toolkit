@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # Copyright (c) 2010 Shelltoad Computing <info@shelltoad.com>
 #
 # This file is part of the "AT Command Toolkit" application.
@@ -15,6 +17,7 @@
 # You should have received a copy of the GNU General Public License along with
 # this program. If not, see <http://www.gnu.org/licenses/>.
 
+
 """
 Top level application file for the AT Command Toolkit application.
 """
@@ -24,39 +27,27 @@ AUTHOR = 'Craig Dodd'
 ORGANIZATION = 'Shelltoad Computing'
 COPYRIGHT = 'GNU General Public License v3'
 
-# Try to import required modules
-try:
-    # Standard library modules
-    import sys
+# import required modules
 
-    # 3rd party modules
-    from PyQt4.QtCore import *
-    from PyQt4.QtGui import *
+# Standard library modules
+import sys
 
-    # Local application modules
-    from connectdlg import ConnectDlg
-    import resources
-    from tabs.basicinfo import BasicInfoWidget
-    from tabs.callbarring import CallBarringWidget
-    from tabs.callcontrol import CallControlWidget
-    from tabs.changepasswords import ChangePasswordsWidget
-    from tabs.dtmfkeypad import DtmfKeypadWidget
-    from tabs.setfunctionality import SetFunctionalityWidget
-    from terminal import TerminalWidget
+# 3rd party modules
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
-# Display a Tkinter messagebox if a module failed to import (assumes that the
-# Tkinter modules are available, which they should be)
-except ImportError, e:
-    import Tkinter, tkMessageBox
-    root = Tkinter.Tk()
-    root.withdraw()
+# Local application modules
+from connectdlg import ConnectDlg
+import resources
+from tabs.basicinfo import BasicInfoWidget
+from tabs.callbarring import CallBarringWidget
+from tabs.callcontrol import CallControlWidget
+from tabs.changepasswords import ChangePasswordsWidget
+from tabs.dtmfkeypad import DtmfKeypadWidget
+from tabs.setfunctionality import SetFunctionalityWidget
+from terminal import TerminalWidget
 
-    # Get the name of the module that could not be imported and display an
-    # error dialog.
-    module_name = e.message.split()[-1]
-    tkMessageBox.showerror('Error: Module Not Found',
-                           'The module "%s" is not installed. This is required for the %s to run.' % (module_name, APP_NAME))
-    sys.exit(1)
 
 class MainWindow(QMainWindow):
     """
@@ -77,32 +68,32 @@ class MainWindow(QMainWindow):
         file_exit_action = QAction(self.tr('E&xit'), self)
         file_exit_action.setToolTip(self.tr('Exit the Application'))
         file_exit_action.setIcon(QIcon(':/images/door_open.png'))
-        self.connect(file_exit_action, SIGNAL('triggered()'), self.close)
+        file_exit_action.triggered.connect(qApp.quit)
 
         set_font_action = QAction(self.tr('Set Terminal Font'), self)
         set_font_action.setToolTip(self.tr('Set the terminal font'))
         set_font_action.setIcon(QIcon('images/font.png'))
-        self.connect(set_font_action, SIGNAL('triggered()'), self.set_terminal_font)
+        set_font_action.triggered.connect(self.set_terminal_font)
 
         about_action = QAction(self.tr('About'), self)
         about_action.setToolTip(self.tr('About'))
         about_action.setIcon(QIcon(':/images/icon_info.gif'))
-        self.connect(about_action, SIGNAL('triggered()'), self.show_about)
+        about_action.triggered.connect(self.show_about)
 
         self.connect_com_action = QAction('Connect COM Port', self)
         self.connect_com_action.setToolTip('Connect COM Port')
         self.connect_com_action.setIcon(QIcon(':/images/connect.png'))
-        self.connect(self.connect_com_action, SIGNAL('triggered()'), self.connect_com_port)
+        self.connect_com_action.triggered.connect(self.connect_com_port)
 
         self.disconnect_com_action = QAction('Disconnect COM Port', self)
         self.disconnect_com_action.setToolTip('Disconnect COM Port')
         self.disconnect_com_action.setIcon(QIcon(':/images/disconnect.png'))
         self.disconnect_com_action.setDisabled(True)
-        self.connect(self.disconnect_com_action, SIGNAL('triggered()'), self.disconnect_com_port)
+        self.disconnect_com_action.triggered.connect(self.disconnect_com_port)
 
         # Create & dock the terminal widget
         self.terminal = TerminalWidget()
-        self.connect(self.terminal, SIGNAL('connectionError()'), self.disconnect_com_port)
+        self.terminal.connectionError.connect(self.disconnect_com_port)
 
         terminal_dock = QDockWidget(self.tr('Terminal'), self)
         terminal_dock.setFeatures(QDockWidget.NoDockWidgetFeatures |
@@ -142,7 +133,7 @@ class MainWindow(QMainWindow):
 
         # Get the previous terminal font
         previous_font = self.settings.value('TerminalFont')
-        if previous_font.type() == QVariant.Font:
+        if previous_font:
             self.current_font = QFont(previous_font)
             self.terminal.set_font(self.current_font)
         else:
@@ -163,7 +154,7 @@ class MainWindow(QMainWindow):
         else:
             if exit_on_fail:
                 sys.exit(0) # self.close() is not working here
-    
+
     def disconnect_com_port(self):
 
         # Disconnect the terminal

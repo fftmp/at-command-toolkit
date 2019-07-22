@@ -20,8 +20,9 @@ Module containing the Terminal class/widget for serial port communication.
 """
 
 # 3rd party modules
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 import serial
 
 class TerminalWidget(QWidget):
@@ -39,6 +40,8 @@ class TerminalWidget(QWidget):
     provides the ability for other modules to send commands to the serial
     port via the "send_command" method.
     """
+
+    connectionError = pyqtSignal()
 
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
@@ -68,11 +71,11 @@ class TerminalWidget(QWidget):
         self.read_timer = QTimer(self)
 
         # Connect the widgets
-        self.connect(self.command_txt, SIGNAL('returnPressed()'), self.send_line_command)
-        self.connect(self.send_command_btn, SIGNAL('clicked()'), self.send_line_command)
-        self.connect(self.clear_log_btn, SIGNAL('clicked()'), self.log.clear)
-        self.connect(self.log, SIGNAL('textChanged()'), self.scroll_log)
-        self.connect(self.read_timer, SIGNAL('timeout()'), self.read_serial_data)
+        self.command_txt.returnPressed.connect(self.send_line_command)
+        self.send_command_btn.clicked.connect(self.send_line_command)
+        self.clear_log_btn.clicked.connect(self.log.clear)
+        self.log.textChanged.connect(self.scroll_log)
+        self.read_timer.timeout.connect(self.read_serial_data)
 
     def connect_com_port(self):
 
@@ -156,14 +159,12 @@ class TerminalWidget(QWidget):
             buffer_size = self.serial_conn.inWaiting()
             if buffer_size:
                 current_text = str(self.log.toPlainText())
-                new_text = self.serial_conn.read(buffer_size)
-                new_text = new_text.replace('\r\n', '\n')
+                new_text = self.serial_conn.read(buffer_size).decode('utf-8')
                 new_text = new_text.replace('\r', '')
                 self.log.setText(current_text + new_text)
 
         except serial.SerialException:
-
-            self.emit(SIGNAL('connectionError()'))
+            self.connectionError.emit()
             QMessageBox.critical(self,
                                  self.tr('Serial Port Error'),
                                  self.tr('There was a communication error with the serial port.'),

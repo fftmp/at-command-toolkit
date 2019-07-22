@@ -20,8 +20,9 @@ Module containing the "Set Functionality" commands class/widget.
 """
 
 # 3rd party modules
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 class SetFunctionalityWidget(QWidget):
     """
@@ -72,7 +73,7 @@ class SetFunctionalityWidget(QWidget):
         self.setLayout(container)
 
         # Connect widgets
-        self.connect(set_level_btn, SIGNAL('clicked()'), self.set_functionality)
+        set_level_btn.clicked.connect(self.set_functionality)
 
     def set_functionality(self):
         if self.level0_rad.isChecked(): self.terminal.send_command('AT+CFUN=0')

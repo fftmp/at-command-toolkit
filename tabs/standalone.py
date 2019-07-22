@@ -30,10 +30,10 @@ commands to stdout so that the AT commands can be inspected.
 import sys
 
 # 3rd party modules
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 
-class DummyTerminal(object):
+class DummyTerminal():
     def send_command(self, command):
         """
         AT commands are written to sys.stdout

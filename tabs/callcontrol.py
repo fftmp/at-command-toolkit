@@ -20,8 +20,9 @@ Module containing the "Call Control" commands class/widget.
 """
 
 # 3rd party modules
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 class CallControlWidget(QWidget):
     """
@@ -77,9 +78,9 @@ class CallControlWidget(QWidget):
         self.setLayout(container)
 
         # Connect widgets
-        self.connect(make_call_btn, SIGNAL('clicked()'), self.make_call)
-        self.connect(answer_call_btn, SIGNAL('clicked()'), lambda: terminal.send_command('ATA'))
-        self.connect(end_call_btn, SIGNAL('clicked()'), lambda: terminal.send_command('ATH'))
+        make_call_btn.clicked.connect(self.make_call)
+        answer_call_btn.clicked.connect(lambda: terminal.send_command('ATA'))
+        end_call_btn.clicked.connect(lambda: terminal.send_command('ATH'))
 
     def make_call(self):
         """

@@ -20,8 +20,9 @@ Module containing the "Call Barring" commands class/widget.
 """
 
 # 3rd party modules
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 class CallBarringWidget(QWidget):
     """
@@ -111,18 +112,18 @@ class CallBarringWidget(QWidget):
         self.setLayout(container)
 
         # Connect widgets
-        self.connect(self.facility_ao, SIGNAL('toggled(bool)'), self.check_facility)
-        self.connect(self.facility_oi, SIGNAL('toggled(bool)'), self.check_facility)
-        self.connect(self.facility_ox, SIGNAL('toggled(bool)'), self.check_facility)
-        self.connect(self.facility_ai, SIGNAL('toggled(bool)'), self.check_facility)
-        self.connect(self.facility_ir, SIGNAL('toggled(bool)'), self.check_facility)
-        self.connect(self.facility_ac, SIGNAL('toggled(bool)'), self.check_facility)
-        self.connect(self.facility_ag, SIGNAL('toggled(bool)'), self.check_facility)
-        self.connect(self.facility_ab, SIGNAL('toggled(bool)'), self.check_facility)
-        self.connect(class_toggle, SIGNAL('stateChanged(int)'), self.toggle_classes)
-        self.connect(self.cb_enable_btn, SIGNAL('clicked()'), self.enable_command)
-        self.connect(self.cb_disable_btn, SIGNAL('clicked()'), self.disable_command)
-        self.connect(self.cb_interrogate_btn, SIGNAL('clicked()'), self.interrogate_facility)
+        self.facility_ao.toggled.connect(self.check_facility)
+        self.facility_oi.toggled.connect(self.check_facility)
+        self.facility_ox.toggled.connect(self.check_facility)
+        self.facility_ai.toggled.connect(self.check_facility)
+        self.facility_ir.toggled.connect(self.check_facility)
+        self.facility_ac.toggled.connect(self.check_facility)
+        self.facility_ag.toggled.connect(self.check_facility)
+        self.facility_ab.toggled.connect(self.check_facility)
+        class_toggle.stateChanged.connect(self.toggle_classes)
+        self.cb_enable_btn.clicked.connect(self.enable_command)
+        self.cb_disable_btn.clicked.connect(self.disable_command)
+        self.cb_interrogate_btn.clicked.connect(self.interrogate_facility)
 
     def validate_network_pw(self, network_pw):
         """
@@ -204,7 +205,7 @@ class CallBarringWidget(QWidget):
         # Validate the network password
         try:
             self.validate_network_pw(network_pw)
-        except ValueError, e:
+        except ValueError as e:
             QMessageBox.critical(self, self.tr('Error'), self.tr(e.message), QMessageBox.Ok)
             self.network_pw.setFocus()
             self.network_pw.selectAll()
